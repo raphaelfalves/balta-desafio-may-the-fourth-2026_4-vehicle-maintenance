@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/Itens de Solução/">
+    <File Path=".gitignore" />
+  </Folder>
+  <Project Path="docker-compose.dcproj">
+    <Build />
+  </Project>
+  <Project Path="VehicleMaintenance/VehicleMaintenance.csproj" />
+</Solution>

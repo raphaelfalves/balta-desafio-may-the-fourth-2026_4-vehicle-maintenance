@@ -1,0 +1,30 @@
+services:
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "ps"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 20s
+
+  vehiclemaintenance:
+    image: ${DOCKER_REGISTRY-}vehiclemaintenance
+    build:
+      context: .
+      dockerfile: VehicleMaintenance/Dockerfile
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_URL: http://ollama:11434
+    restart: unless-stopped
+
+volumes:
+  ollama_data:
